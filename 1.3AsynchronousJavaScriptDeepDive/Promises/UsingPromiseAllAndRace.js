@@ -1,0 +1,58 @@
+
+"use strict";
+
+let p1 = new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        resolve("Done");
+    }, 4000);
+});
+
+/*p1.then(function(val) {
+    console.log(val);
+}, function(val) {
+    console.log("rejected: " + val);
+});*/
+
+
+// * * * * * * * *
+
+
+let firstName = function() {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve("Steven");
+        }, 1000);
+    });
+};
+
+let lastName = function() {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve("Hancock");
+        }, 3000);
+    });
+};
+
+let middleName = function() {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve("W.");
+        }, 7000);
+    });
+};
+
+Promise.all([firstName(), lastName(), middleName()])
+    .then(function(msg) {
+        console.log(msg[0] + " " + msg[2] + " " + msg[1]);
+    })
+    .catch(function(msg) {
+        console.log(msg);
+    });
+
+Promise.race([firstName(), lastName(), middleName()])
+    .then(function(msg) {
+        console.log(msg);
+    })
+    .catch(function(msg) {
+        console.log(msg);
+    });
